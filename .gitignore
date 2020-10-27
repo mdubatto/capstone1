@@ -1,4 +1,4 @@
 .DS_Store
 *.icloud
 .vscode/
-*.csv
+Parking_Violations_Issued_FY_2019.csv
