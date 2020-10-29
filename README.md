@@ -39,5 +39,15 @@ The attributes that were focused on are:
 7. GeoPy
 
 ## Visualizing the Data
+A map was created to display clusters colored by size and can be filtered by violation description. The map in the image below displays all 5 violations across New York. If you plan on going to New York soon (and by "soon" I mean "after COVID"), it might be better to drive into Staten Island and take the ferry into the city. As one might imagine, Manhatten had the highest amount of parking tickets.
 
-[Map](https://github.com/mdubatto/capstone1/blob/main/docs/parking_map_w_layers.html)
+![Map with all layers](images/map_all_layers.png)
+
+![Map - street clean layer](images/street_clean_map.png)
+
+![Map - street clean hover](images/sc_map_hover.png)
+
+![Map - street clean drill down](images/sc_map_drill_down.png)
+
+
+
