@@ -40,4 +40,4 @@ The attributes that were focused on are:
 
 ## Visualizing the Data
 
-![Map](/images/parking_map_w_layers.html)
+![Map](/docs/parking_map_w_layers.html)
