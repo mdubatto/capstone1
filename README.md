@@ -40,4 +40,4 @@ The attributes that were focused on are:
 
 ## Visualizing the Data
 
-![Map](/docs/parking_map_w_layers.html)
+[Map](https://github.com/mdubatto/capstone1/blob/main/docs/parking_map_w_layers.html)
