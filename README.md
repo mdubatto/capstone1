@@ -163,4 +163,5 @@ ____
 ## Next Steps
 
 * Try bootstrapping method before testing
-* Run linear regression analysis on frequency of tickets when the data is grouped by hour, weekday/weekend, and week of month.
+* Run linear regression analysis on frequency of tickets when the data is grouped by hour, weekday/weekend, and week of month
+* Rerun the fiscal year 2020 data
