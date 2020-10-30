@@ -9,7 +9,8 @@ Parking violations are a major source of frustration when traveling or living wi
 ----
 
 ## Data
-The NYC Parking Violations dataset contains information about violations issued in fiscal year 2019. The original data had approximately 11 million observations. To narrow down my analysis, I decided to focus on the 5 most common types of violations:
+
+The NYC Parking Violations [dataset](https://data.cityofnewyork.us/City-Government/Parking-Violations-Issued-Fiscal-Year-2019/faiq-9dfq) contains information about violations issued in fiscal year 2019. The original data had approximately 11 million observations. To narrow down my analysis, I decided to focus on the 5 most common types of violations:
 
 1. No Parking-Street Cleaning
 2. Fail To Display Municiple Meter Receipt
@@ -157,3 +158,9 @@ alpha = 0.05
 
 ![Mann Whitney U Results](images/mannwhitneyu_results.png)
 
+____
+
+## Next Steps
+
+* Try bootstrapping method before testing
+* Run linear regression analysis on frequency of tickets when the data is grouped by hour, weekday/weekend, and week of month.
