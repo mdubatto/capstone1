@@ -74,18 +74,20 @@ for i in range(0, unique_addr.shape[0]+1, 100):
 ## Visualizing the Data
 
 ### Mapping
-A map was then created to display clusters colored by size and can be filtered by violation description. The map in the image below displays all 5 violations across New York. If you plan on going to New York soon (and by "soon" I mean "after COVID"), it might be better to drive into Staten Island and take the ferry into the city. As one might imagine, Manhatten had the highest amount of parking tickets.
+
+Two maps were created to view the data: one without any layers and one that can be filtered by violation description
+
+This first map displays clusters clusters colored by how many violation occurred in the bounds of the cluster. To see the bounds of each particular cluster, simply hover over it and the area will be highlighted as shown below. If you plan on going to New York soon (and by "soon" I mean "after COVID"), it might be better to drive into Staten Island and take the ferry into the city.
+
+![Map with no layers](images/map_no_layers_hover.png)
+
+The second map can be filtered by violation description. The image below displays all 5 violations across New York. As one might imagine, Manhatten had the highest amount of parking tickets.
 
 ![Map with all layers](images/map_all_layers.png)
 
 When we select only the No Parking-Street Cleaning tickets, we can see that Brooklyn and Queens actually has higher amounts of street cleaning tickets than Manhatten.
 
 ![Map - street clean layer](images/street_clean_map.png)
-
-![Map - street clean hover](images/sc_map_hover.png)
-
-![Map - street clean drill down](images/sc_map_drill_down.png)
-
 
 ### Plotting
 It can be assumed that time of day and day of week also effect the number of violations that occur--especially since no parking zones and street cleaning tend to only happen on certain days and during timeframes. We'll try to visualize that next.
