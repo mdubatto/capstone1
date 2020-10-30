@@ -1,5 +1,7 @@
 # Capstone 1: NYC Parking Violations
-![NYC Parking](images/nyc_parking.jpg)
+<p align="center">
+<img src="images/nyc_parking.jpg" width='700'/>
+</p>
 ## Introduction
 Parking violations are a major source of frustration when traveling or living within any city--especially New York. This project will focus on the top 5 violations issued by the NYPD and vizualize where they occured. It will also examine if the day of the week has an affect of the number of tickets issued.
 
@@ -98,7 +100,10 @@ When viewing the same plot broken out by burough, it's clear that Brooklyn is dr
 
 After some research, I found that the No Parking-Street Cleaning signs in Brooklyn are not always clear. According to [this article](https://northbrooklynnews.com/2020/08/10/street-cleaning-back-and-cleaning-up-on-tickets/) it got even more confusing this past summer. If the signs showed more than one day, street cleaning only occured on the last day from June 29 until Labor Day due to COVID. It would be interesting to repeat this study on the Fiscal Year 2020 data and compare to see if the number of tickets increased even more in those months.
 
-![Brooklyn street cleaning sign](images/brooklyn_sc_sign.jpg)
+<p align="center">
+<img src="images/brooklyn_sc_sign.jpg">
+</p>
+
 
 Next, we'll see if the day of the week impacted ticketing. As expected, the street cleaning tickets are higher on certain days due to different streets having different cleaning schedules. I was surprised to see that tickets issued for not displaying a meter receipt increased on Saturday. This could be due to drivers making an assumption that ticketing is more lax on a Saturday since it's not during the work week or due to tourists coming into the city on the weekends and not checking the parking restrictions. Sunday has decreased amount of tickets across all violations which is to be expected.
 
@@ -111,14 +116,35 @@ Once again, Staten Island has dramatically fewer tickets than the other buroughs
 ![Violations per Weekday and Burough](images/v_per_weekday_and_burough.png)
 
 
-## Statistical Analysis
+## Hypothesis Testing: Mann-Whitney U
 
-Next we'll test to see if there are differences in the mean counts of violations based on the day of the week. I started by plotting the distribution for each day along with the mean for each distribution. As you can see in the plot, Monday through Friday have gaps in their distributions--each with clusters between about 0-20. This could be due to the different types of violations having different distributions. Sunday is the only day with a clear normal distribution. Since majority of the groups do not follow a normal distribution, we will use Mann Whitney U to test for the differences.
+Next we'll test to see if there are differences in the mean counts of violations based on the day of the week. I started by plotting the distribution for each day along with the mean for each distribution. As you can see in the plot, Monday through Friday have gaps in their distributions--each with clusters between about 0-20. This could be due to the different types of violations having different distributions. Sunday is the only day with a clear normal distribution. Since majority of the groups do not follow a normal distribution, we will use Mann-Whitney U to test for the differences.
 
 ![Violations per Weekday Scatterplot](images/v_per_weekday_scat.png)
 
-![Summary stats](images/dow_summ_stats.png)
+<p align="center">
+<img src="images/dow_summ_stats.png" width='500'/>
+</p>
 
+The empirical distributions for Tuesday, Thursday, and Friday all appear more similar to each other than to the distributions of the other weekdays. We will be testing for a difference between each combination, but I will be more focused on differences between Monday through Friday than the weekends.
+<p align="center">
+<img src="images/empir_dist.png">
+</p>
 
-![Empirical Distribution](images/empir_dist.png)
+**Hypotheses**\
+H<sub>0</sub>: the mean of group A = the mean of group B\
+H<sub>A</sub>: the mean of group A is not equal to the mean of group B\
+
+**Significance Level**\
+alpha = 0.05
+
+**Observations**
+* Index 7, 8, & 15: Accept H<sub>0</sub> -  Due to the high p-values on these 3 tests, we can conclude that the difference in means of Tuesday, Thursday, and Friday is likely to be explained by the null hypothesis.\
+
+* Index 1: Reject H<sub>0</sub> - There is only a 4.2% chance that the difference in means of Monday and Wednesday can be explained by the null hypothesis. The difference in parking violations between these two days is statistically significant. Please note that the p-value in this test is very close to the alpha value. If we wanted a wider confidence interval this test would have gone the other way.
+
+* The other tests: Reject H<sub>0</sub>
+
+* Looking more closely at Index 1 and 8: The groups in Index 8 have a higher difference in mean than the groups in Index 1, yet we accepted the null hypothesis in 8 but rejected it in 1. This is most likely due to the larger difference in variance between the Index 8 group. As it turns out, one of the assumptions of Mann-Whitney U is that the groups have the same shape. As you can see in the empirical distributions, not all groups follow the same shape...oops!!
+
 ![Mann Whitney U Results](images/mannwhitneyu_results.png)
