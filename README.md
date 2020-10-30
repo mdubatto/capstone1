@@ -6,6 +6,7 @@
 ## Introduction
 Parking violations are a major source of frustration when traveling or living within any city--especially New York. This project will focus on the top 5 violations issued by the NYPD and vizualize where they occured. It will also examine if the day of the week has an affect of the number of tickets issued.
 
+----
 
 ## Data
 The NYC Parking Violations dataset contains information about violations issued in fiscal year 2019. The original data had approximately 11 million observations. To narrow down my analysis, I decided to focus on the 5 most common types of violations:
@@ -27,10 +28,10 @@ The attributes that were focused on are:
 * Violation Code
 * Violation Description
 * Violation County
-* Vehicle Make
 * Latitude
 * Longitude
 
+----
 
 ## Packages
 1. PySpark
@@ -41,6 +42,7 @@ The attributes that were focused on are:
 6. Folium
 7. GeoPy
 
+----
 
 ## Open Street Maps Nominatim API
 
@@ -71,6 +73,8 @@ for i in range(0, unique_addr.shape[0]+1, 100):
     unique_addr.iloc[i:i+100,:].to_csv('../data/address3.csv', mode='a', header=False)
     print(f"Another hundred done!!!!! {i} to {i + 100}")
 ```
+
+----
 
 ## Visualizing the Data
 
@@ -118,6 +122,7 @@ Once again, Staten Island has dramatically fewer tickets than the other buroughs
 
 ![Violations per Weekday and Burough](images/v_per_weekday_and_burough.png)
 
+----
 
 ## Hypothesis Testing: Mann-Whitney U
 
@@ -142,7 +147,7 @@ H<sub>A</sub>: the mean of group A is not equal to the mean of group B\
 alpha = 0.05
 
 **Observations**
-* Index 7, 8, & 15: Accept H<sub>0</sub> -  Due to the high p-values on these 3 tests, we can conclude that the difference in means of Tuesday, Thursday, and Friday is likely to be explained by the null hypothesis.\
+* Index 7, 8, & 15: Accept H<sub>0</sub> -  Due to the high p-values on these 3 tests, we can conclude that the difference in means of Tuesday, Thursday, and Friday is likely to be explained by the null hypothesis.
 
 * Index 1: Reject H<sub>0</sub> - There is only a 4.2% chance that the difference in means of Monday and Wednesday can be explained by the null hypothesis. The difference in parking violations between these two days is statistically significant. Please note that the p-value in this test is very close to the alpha value. If we wanted a wider confidence interval this test would have gone the other way.
 
@@ -151,3 +156,4 @@ alpha = 0.05
 * Looking more closely at Index 1 and 8: The groups in Index 8 have a higher difference in mean than the groups in Index 1, yet we accepted the null hypothesis in 8 but rejected it in 1. This is most likely due to the larger difference in variance between the Index 8 group. As it turns out, one of the assumptions of Mann-Whitney U is that the groups have the same shape. As you can see in the empirical distributions, not all groups follow the same shape...oops!!
 
 ![Mann Whitney U Results](images/mannwhitneyu_results.png)
+
