@@ -1,7 +1,7 @@
 # Capstone 1: NYC Parking Violations
-
+![NYC Parking](images/nyc_parking.jpg)
 ## Introduction
-Parking violations are a major source of frustration when traveling or living within any city--especially New York. This project will focus on the top 5 violations issued by the NYPD and vizualize where they occured. It will also examine if the day of the week has an affect of the number of tickets issued and if there is a certain car make that gets ticketed more often.
+Parking violations are a major source of frustration when traveling or living within any city--especially New York. This project will focus on the top 5 violations issued by the NYPD and vizualize where they occured. It will also examine if the day of the week has an affect of the number of tickets issued.
 
 
 ## Data
@@ -15,7 +15,7 @@ The NYC Parking Violations dataset contains information about violations issued 
 
 The dataset was reduced further by dropping columns that had greater than 50% missing values plus a few additional fields that were not needed. Rows with null values where then dropped and a random sample of 1% without replacement was chosen resulting in a dataset with 51,819 observations.
 
-Open Street Map API was used to get the coordinate data for the addresses and the cached results were read in and merged with the sample dataset.
+Open Street Map API via GeoPy was used to get the coordinate data for ~37,000 addresses. The cached results were read into pandas and merged with the sample dataset.
 
 The attributes that were focused on are:
 
@@ -38,10 +38,45 @@ The attributes that were focused on are:
 6. Folium
 7. GeoPy
 
+
+## Open Street Maps Nominatim API
+
+A large amount of time was spent actually getting the coordinate data to create the map. I used the Nominatim class in GeoPy to do this. Nominatim is Open Street Maps (OSM) API, but GeoPy includes other mapping API as well (Google Maps, Bing, etc.). I decided to go with OSM because it's free and does not require an API key. The usage policy for using Nominatim can be found [here](https://operations.osmfoundation.org/policies/nominatim/). It includes the following restrictions for bulk geocoding:
+
+* limit your requests to a single thread
+* limited to 1 machine only, no distributed scripts (including multiple Amazon EC2 instances or similar)
+* Results must be cached on your side. Clients sending repeatedly the same query may be classified as faulty and blocked.
+
+To get all 37,000 addresses, it took approximately 17 hours. As you can see in the code below, it helps to run the function in chunks and append the data to a csv file as you go.
+
+```python
+park_sample['Address'] = park_sample['House Number'] + ' ' + park_sample['Street Name'] + ' NYC'
+
+unique_addr = park_sample[['Address']].drop_duplicates()
+
+def get_location(address):
+    geolocator = Nominatim(user_agent="capstone1")
+    location = geolocator.geocode(address)
+    if location:
+        lat, long = location.latitude, location.longitude
+        return lat, long
+    else:
+        return 0, 0
+
+for i in range(0, unique_addr.shape[0]+1, 100): 
+    unique_addr['location'] = unique_addr.iloc[i:i+100, 0].apply(lambda x: get_location(x))
+    unique_addr.iloc[i:i+100,:].to_csv('../data/address3.csv', mode='a', header=False)
+    print(f"Another hundred done!!!!! {i} to {i + 100}")
+```
+
 ## Visualizing the Data
-A map was created to display clusters colored by size and can be filtered by violation description. The map in the image below displays all 5 violations across New York. If you plan on going to New York soon (and by "soon" I mean "after COVID"), it might be better to drive into Staten Island and take the ferry into the city. As one might imagine, Manhatten had the highest amount of parking tickets.
+
+### Mapping
+A map was then created to display clusters colored by size and can be filtered by violation description. The map in the image below displays all 5 violations across New York. If you plan on going to New York soon (and by "soon" I mean "after COVID"), it might be better to drive into Staten Island and take the ferry into the city. As one might imagine, Manhatten had the highest amount of parking tickets.
 
 ![Map with all layers](images/map_all_layers.png)
+
+When we select only the No Parking-Street Cleaning tickets, we can see that Brooklyn and Queens actually has higher amounts of street cleaning tickets than Manhatten.
 
 ![Map - street clean layer](images/street_clean_map.png)
 
@@ -50,4 +85,40 @@ A map was created to display clusters colored by size and can be filtered by vio
 ![Map - street clean drill down](images/sc_map_drill_down.png)
 
 
+### Plotting
+It can be assumed that time of day and day of week also effect the number of violations that occur--especially since no parking zones and street cleaning tend to only happen on certain days and during timeframes. We'll try to visualize that next.
 
+As you can see in the plot below of the violation frequency by hours, violations start to spike around 7 AM until 5 PM. Street cleaniing violations have two extremely unusual spikes at 8-9 AM and 11 AM. This could be because different areas of New York have different street cleaning hours.
+
+![Violations per Hour](images/v_per_hour.png)
+
+When viewing the same plot broken out by burough, it's clear that Brooklyn is driving the high street cleaning tickets with Queens having the next highest around 8 AM.
+
+![Violations per Hour and Burough](images/v_per_hour_and_burough.png)
+
+After some research, I found that the No Parking-Street Cleaning signs in Brooklyn are not always clear. According to [this article](https://northbrooklynnews.com/2020/08/10/street-cleaning-back-and-cleaning-up-on-tickets/) it got even more confusing this past summer. If the signs showed more than one day, street cleaning only occured on the last day from June 29 until Labor Day due to COVID. It would be interesting to repeat this study on the Fiscal Year 2020 data and compare to see if the number of tickets increased even more in those months.
+
+![Brooklyn street cleaning sign](images/brooklyn_sc_sign.jpg)
+
+Next, we'll see if the day of the week impacted ticketing. As expected, the street cleaning tickets are higher on certain days due to different streets having different cleaning schedules. I was surprised to see that tickets issued for not displaying a meter receipt increased on Saturday. This could be due to drivers making an assumption that ticketing is more lax on a Saturday since it's not during the work week or due to tourists coming into the city on the weekends and not checking the parking restrictions. Sunday has decreased amount of tickets across all violations which is to be expected.
+
+![Violations per Weekday](images/v_per_weekday.png)
+
+Again we'll view this data broken out by burough. It seems the spike in meter receipt tickets is mostly caused my Manhatten.
+
+Once again, Staten Island has dramatically fewer tickets than the other buroughs. Those ferry boats are looking pretty good right now!
+
+![Violations per Weekday and Burough](images/v_per_weekday_and_burough.png)
+
+
+## Statistical Analysis
+
+Next we'll test to see if there are differences in the mean counts of violations based on the day of the week. I started by plotting the distribution for each day along with the mean for each distribution. As you can see in the plot, Monday through Friday have gaps in their distributions--each with clusters between about 0-20. This could be due to the different types of violations having different distributions. Sunday is the only day with a clear normal distribution. Since majority of the groups do not follow a normal distribution, we will use Mann Whitney U to test for the differences.
+
+![Violations per Weekday Scatterplot](images/v_per_weekday_scat.png)
+
+![Summary stats](images/dow_summ_stats.png)
+
+
+![Empirical Distribution](images/empir_dist.png)
+![Mann Whitney U Results](images/mannwhitneyu_results.png)
