@@ -154,7 +154,7 @@ alpha = 0.05
 
 * The other tests: Reject H<sub>0</sub>
 
-* Looking more closely at Index 1 and 8: The groups in Index 8 have a higher difference in mean than the groups in Index 1, yet we accepted the null hypothesis in 8 but rejected it in 1. This is most likely due to the larger difference in variance between the Index 8 group. As it turns out, one of the assumptions of Mann-Whitney U is that the groups have the same shape. As you can see in the empirical distributions, not all groups follow the same shape...oops!!
+* Looking more closely at Index 1 and 8: The groups in Index 8 have a higher difference in mean than the groups in Index 1, yet we accepted the null hypothesis in 8 but rejected it in 1. This is most likely due to the larger difference in variance between the Index 8 group. As it turns out, one of the assumptions of Mann-Whitney U is that the groups have the same shape. As you can see in the empirical distributions, not all groups follow the same shape.
 
 ![Mann Whitney U Results](images/mannwhitneyu_results.png)
 
