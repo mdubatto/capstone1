@@ -4,7 +4,7 @@
 </p>
 
 ## Introduction
-Parking violations are a major source of frustration when traveling or living within any city--especially New York. This project will focus on the top 5 violations issued by the NYPD and vizualize where they occured. It will also examine if the day of the week has an affect of the number of tickets issued.
+Parking violations are a major source of frustration when traveling or living within any city--especially New York. This project will focus on the top 5 violations issued by the NYPD and visualize where they occurred. It will also examine if the day of the week has an affect of the number of tickets issued.
 
 ----
 
