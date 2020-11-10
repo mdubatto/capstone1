@@ -83,7 +83,7 @@ for i in range(0, unique_addr.shape[0]+1, 100):
 
 Two maps were created to view the data: one without any layers and one that can be filtered by violation description
 
-This first map displays clusters clusters colored by how many violation occurred in the bounds of the cluster. To see the bounds of each particular cluster, simply hover over it and the area will be highlighted as shown below. If you plan on going to New York soon (and by "soon" I mean "after COVID"), it might be better to drive into Staten Island and take the ferry into the city.
+This first map displays clusters colored by how many violation occurred within the bounds of the cluster. To see the bounds of each particular cluster, simply hover over it and the area will be highlighted as shown below. As you can see from the map, if you plan on going to New York soon (and by "soon" I mean "after COVID"), it might be better to drive into Staten Island and take the ferry into the city.
 
 ![Map with no layers](images/map_no_layers_hover.png)
 
@@ -113,11 +113,11 @@ After some research, I found that the No Parking-Street Cleaning signs in Brookl
 </p>
 
 
-Next, we'll see if the day of the week impacted ticketing. As expected, the street cleaning tickets are higher on certain days due to different streets having different cleaning schedules. I was surprised to see that tickets issued for not displaying a meter receipt increased on Saturday. This could be due to drivers making an assumption that ticketing is more lax on a Saturday since it's not during the work week or due to tourists coming into the city on the weekends and not checking the parking restrictions. Sunday has decreased amount of tickets across all violations which is to be expected.
+Next, we'll see if the day of the week impacted ticketing. As expected, the street cleaning tickets are higher on certain days due to different streets having different cleaning schedules. I was surprised to see that tickets issued for not displaying a meter receipt increased on Saturday. This could be due to drivers making an assumption that ticketing is more lax on a Saturday since it's not during the work week or due to tourists coming into the city on the weekends and not checking the parking restrictions. Sunday has fewer amounts of tickets across all violations which is to be expected.
 
 ![Violations per Weekday](images/v_per_weekday.png)
 
-Again we'll view this data broken out by burough. It seems the spike in meter receipt tickets is mostly caused my Manhatten.
+Again we'll view this data broken out by burough. It seems the spike in meter receipt tickets is mostly caused by Manhatten.
 
 Once again, Staten Island has dramatically fewer tickets than the other buroughs. Those ferry boats are looking pretty good right now!
 
